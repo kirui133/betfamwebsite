@@ -3,30 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetFamke - Home Page</title>
+    <title>BetFam - Tea Farm Record Keeping App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-        h1 {
+            padding: 0;
             color: #333;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #50b3a2;
+            color: white;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #e8491d 3px solid;
+        }
+        header h1 {
+            margin: 0;
+            text-align: center;
+            font-size: 2.5em;
+        }
+        .tagline {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .features {
+            background: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .features h2 {
+            color: #50b3a2;
+        }
+        .features ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .features li:last-child {
+            border-bottom: none;
+        }
+        .cta {
+            background: #e8491d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
         }
         .footer {
+            text-align: center;
+            padding: 20px;
             margin-top: 20px;
-            font-size: 0.9em;
+            background: #333;
+            color: white;
+        }
+        .footer a {
+            color: #50b3a2;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to BetFamke</h1>
-    <p>This is the home page</p>
-    <p>Here you can add more content about your website or services.</p>
+    <header>
+        <div class="container">
+            <h1>BetFam</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <p class="tagline">Tea Farm Record Keeping App</p>
+        
+        <p>Streamline your tea farm management with BetFam, the comprehensive record-keeping solution designed for tea farmers.</p>
+
+        <div class="features">
+            <h2>Key Features:</h2>
+            <ul>
+                <li>Green Leaf Tracking: Easily record and monitor daily green leaf kilos.</li>
+                <li>Employee Wage Management: Calculate and track wages based on performance.</li>
+                <li>Statistical Insights: View monthly and yearly charts for production analysis.</li>
+                <li>Employee Performance: Monitor individual employee kilo contributions.</li>
+                <li>Cloud Storage: Securely store all data on each user's Google Drive.</li>
+            </ul>
+        </div>
+
+        <p>BetFam simplifies tea farm operations, helping you make data-driven decisions to improve productivity and profitability. Whether you're managing a small plantation or a large estate, BetFam adapts to your needs, providing a user-friendly interface for efficient record-keeping.</p>
+
+        <a href="#" class="cta">Get Started with BetFam</a>
+
+        <p>Take control of your tea farm's data today with BetFam - your partner in cultivating success.</p>
+    </div>
+
     <div class="footer">
-        <a href="privacy.html">Privacy Statement</a>
+        <a href="privacy.html">Privacy Statement</a> | &copy; 2024 BetFam
     </div>
 </body>
 </html>
