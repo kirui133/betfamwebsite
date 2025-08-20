@@ -1,115 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetFam - Tea Farm Record Keeping App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 20px;
-        }
-        header {
-            background: #50b3a2;
-            color: white;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #e8491d 3px solid;
-        }
-        header h1 {
-            margin: 0;
-            text-align: center;
-            font-size: 2.5em;
-        }
-        .tagline {
-            text-align: center;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        .features {
-            background: #fff;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .features h2 {
-            color: #50b3a2;
-        }
-        .features ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
-        }
-        .features li:last-child {
-            border-bottom: none;
-        }
-        .cta {
-            background: #e8491d;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            display: inline-block;
-            margin-top: 20px;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-            background: #333;
-            color: white;
-        }
-        .footer a {
-            color: #50b3a2;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BetFam — Tea Farm Record‑Keeping App</title>
+  <meta name="description" content="BetFam helps tea farmers record green leaf kilos, manage wages, and visualize production with secure Google Drive sync. Fast. Simple. Professional." />
+  <meta name="theme-color" content="#0a6e5a" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="BetFam — Tea Farm Record‑Keeping App" />
+  <meta property="og:description" content="Digitize your tea farm records, manage wages, and make data-driven decisions with charts and insights." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://betfam.example/" />
+  <meta property="og:image" content="/assets/og-image.jpg" />
+  <link rel="icon" href="/assets/favicon.png" />
+  <style>
+    /* ----------------------
+       Base + Theme
+    ---------------------- */
+    :root{
+      --brand: #0a6e5a; /* deep teal */
+      --brand-2: #44c2aa; /* mint */
+      --accent: #e8491d; /* orange */
+      --ink: #1f2937; /* gray-800 */
+      --muted: #6b7280; /* gray-500 */
+      --bg: #f7faf9; /* off white */
+      --card: #ffffff;
+      --ring: rgba(10,110,90,.25);
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(3, 7, 18, 0.08);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b1210;
+        --card:#0f1916;
+        --ink:#e5e7eb;
+        --muted:#9ca3af;
+        --ring: rgba(68,194,170,.35);
+        --shadow: 0 10px 30px rgba(0,0,0,.45);
+      }
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.7;
+    }
+    a{color:var(--brand)}
+    .container{width:min(1100px, 92%); margin-inline:auto}
+
+    /* ----------------------
+       Header / Nav
+    ---------------------- */
+    .skip-link{position:absolute;left:-9999px;top:auto;}
+    .skip-link:focus{left:12px;top:12px;background:#fff;color:#111;padding:.5rem .75rem;border-radius:8px;box-shadow:var(--shadow)}
+
+    .nav{
+      position:sticky; top:0; z-index:50;
+      background:rgba(255,255,255,.75);
+      backdrop-filter:saturate(180%) blur(12px);
+      border-bottom:1px solid rgba(0,0,0,.05);
+    }
+    @media (prefers-color-scheme: dark){
+      .nav{background:rgba(15,25,22,.65); border-bottom-color:rgba(255,255,255,.06)}
+    }
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:12px 0}
+    .brand{display:flex; align-items:center; gap:.6rem; font-weight:800; font-size:1.15rem; letter-spacing:.2px}
+    .brand .logo{width:34px;height:34px;border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#fff; box-shadow:var(--shadow)}
+
+    .nav-links{display:flex; gap:1rem; align-items:center}
+    .nav-links a{display:inline-block; padding:.4rem .7rem; border-radius:10px; text-decoration:none; color:inherit}
+    .nav-links a:hover{background:rgba(0,0,0,.05)}
+    @media (prefers-color-scheme: dark){
+      .nav-links a:hover{background:rgba(255,255,255,.06)}
+    }
+    .nav-cta{display:inline-block;background:var(--accent);color:#fff !important;padding:.6rem .95rem;border-radius:12px;text-decoration:none;font-weight:700;box-shadow:var(--shadow)}
+    .hamburger{display:none; background:none;border:0; padding:.5rem; border-radius:10px}
+    .hamburger:focus{outline:3px solid var(--ring)}
+    @media (max-width: 820px){
+      .nav-links{display:none}
+      .hamburger{display:inline-grid; place-items:center}
+      .mobile-menu{display:none; position:absolute; inset:60px 0 auto 0; background:inherit; border-bottom:1px solid rgba(0,0,0,.06)}
+      .mobile-menu a{display:block; padding:12px 24px; text-decoration:none; color:inherit}
+      .mobile-menu a:hover{background:rgba(0,0,0,.05)}
+      @media (prefers-color-scheme: dark){
+        .mobile-menu a:hover{background:rgba(255,255,255,.06)}
+      }
+    }
+
+    /* ----------------------
+       Hero
+    ---------------------- */
+    .hero{
+      position:relative; overflow:hidden; isolation:isolate;
+      background: radial-gradient(1200px 400px at 15% -10%, rgba(68,194,170,.25), transparent),
+                  radial-gradient(900px 300px at 90% 10%, rgba(10,110,90,.18), transparent),
+                  linear-gradient(180deg, #ffffff, #f1f7f5);
+    }
+    @media (prefers-color-scheme: dark){
+      .hero{background: radial-gradient(1200px 400px at 15% -10%, rgba(68,194,170,.25), transparent),
+                     radial-gradient(900px 300px at 90% 10%, rgba(10,110,90,.3), transparent),
+                     linear-gradient(180deg, #0f1916, #0b1210);}
+    }
+    .hero-inner{padding:72px 0 36px; display:grid; grid-template-columns: 1.15fr .85fr; gap:2rem; align-items:center}
+    @media (max-width: 920px){ .hero-inner{grid-template-columns:1fr; padding:58px 0 20px} }
+
+    .kicker{display:inline-block; background:rgba(10,110,90,.08); color:var(--brand); border:1px solid rgba(10,110,90,.15); padding:.25rem .6rem; border-radius:999px; font-weight:700; font-size:.82rem; letter-spacing:.2px}
+    @media (prefers-color-scheme: dark){ .kicker{background:rgba(68,194,170,.12); color:#b6fff0; border-color:rgba(68,194,170,.25)} }
+
+    h1{font-size: clamp(2rem, 3.6vw, 3rem); line-height:1.15; margin:10px 0}
+    .sub{font-size:clamp(1rem, 1.4vw, 1.15rem); color:var(--muted); max-width:52ch}
+
+    .cta-row{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+    .btn{display:inline-flex; align-items:center; gap:.55rem; text-decoration:none; padding:.8rem 1.05rem; border-radius:12px; font-weight:800; border:1px solid transparent; transition:transform .08s ease, box-shadow .2s ease, background .2s ease}
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:var(--accent); color:#fff}
+    .btn-primary:hover{box-shadow:var(--shadow)}
+    .btn-ghost{background:transparent; color:var(--ink); border-color:rgba(0,0,0,.1)}
+    @media (prefers-color-scheme: dark){ .btn-ghost{border-color:rgba(255,255,255,.18)} }
+
+    .hero-card{background:var(--card); border:1px solid rgba(0,0,0,.06); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px}
+    .hero-card .mock{aspect-ratio: 16/10; border-radius:12px; background:linear-gradient(135deg, rgba(10,110,90,.2), rgba(68,194,170,.2)); display:grid; place-items:center; color:#0a6e5a; font-weight:800}
+
+    /* ----------------------
+       Sections
+    ---------------------- */
+    section{padding:54px 0}
+    .section-title{font-size: clamp(1.4rem, 2.2vw, 2rem); margin:0 0 8px}
+    .section-sub{color:var(--muted); max-width:62ch}
+
+    .grid{display:grid; gap:18px}
+    .grid-3{grid-template-columns: repeat(3, 1fr)}
+    .grid-2{grid-template-columns: repeat(2, 1fr)}
+    @media (max-width: 900px){ .grid-3{grid-template-columns:1fr 1fr} }
+    @media (max-width: 640px){ .grid-3, .grid-2{grid-template-columns:1fr} }
+
+    .card{background:var(--card); border:1px solid rgba(0,0,0,.06); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow)}
+
+    .icon{width:36px;height:36px;border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#fff; box-shadow:var(--shadow)}
+    .muted{color:var(--muted)}
+
+    /* Feature list */
+    .feature{display:flex; gap:14px}
+
+    /* Steps */
+    .step{display:flex; gap:14px; align-items:flex-start}
+    .num{width:34px;height:34px;border-radius:999px; display:grid; place-items:center; background:rgba(10,110,90,.1); color:var(--brand); font-weight:900}
+    @media (prefers-color-scheme: dark){ .num{background:rgba(68,194,170,.15); color:#b6fff0} }
+
+    /* FAQ */
+    .faq-item{border:1px solid rgba(0,0,0,.08); border-radius:14px; background:var(--card)}
+    .faq-q{width:100%; text-align:left; padding:16px 18px; font-weight:700; background:none; border:0; display:flex; justify-content:space-between; align-items:center; border-radius:14px}
+    .faq-a{padding:0 18px 16px; color:var(--muted); display:none}
+
+    /* Footer */
+    footer{border-top:1px solid rgba(0,0,0,.06); padding:28px 0; color:var(--muted)}
+
+    /* Reveal on scroll */
+    .reveal{opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease}
+    .reveal.visible{opacity:1; transform:none}
+
+    /* Utility */
+    .center{text-align:center}
+    .spacer-2{height:12px}
+    .spacer-4{height:24px}
+    .spacer-6{height:36px}
+    .badge{display:inline-block; font-size:.8rem; padding:.2rem .5rem; border-radius:999px; background:rgba(232,73,29,.1); color:var(--accent); border:1px dashed rgba(232,73,29,.25)}
+    .shadow{box-shadow:var(--shadow)}
+    .nowrap{white-space:nowrap}
+    .divider{height:1px; background:rgba(0,0,0,.06); margin:14px 0}
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>BetFam</h1>
-        </div>
-    </header>
-    <div class="container">
-        <p class="tagline">Tea Farm Record Keeping App</p>
-        
-        <p>Streamline your tea farm management with BetFam, the comprehensive record-keeping solution designed for tea farmers.</p>
-        <div class="features">
-            <h2>Key Features:</h2>
-            <ul>
-                <li>Green Leaf Tracking: Easily record and monitor daily green leaf kilos.</li>
-                <li>Employee Wage Management: Calculate and track wages based on performance.</li>
-                <li>Statistical Insights: View monthly and yearly charts for production analysis.</li>
-                <li>Employee Performance: Monitor individual employee kilo contributions.</li>
-                <li>Cloud Storage: Securely store all data on each user's Google Drive.</li>
-            </ul>
-        </div>
-        <p>BetFam simplifies tea farm operations, helping you make data-driven decisions to improve productivity and profitability. Whether you're managing a small plantation or a large estate, BetFam adapts to your needs, providing a user-friendly interface for efficient record-keeping.</p>
-        <a href="https://play.google.com/store/apps/details?id=com.betfam.apptea" class="cta">Get Started with BetFam</a>
-        <p>Take control of your tea farm's data today with BetFam - your partner in cultivating success.</p>
-    </div>
-    <div class="footer">
-    <a href="privacy.html">Privacy Statement</a> | 
-    <a href="terms.html">Terms and Conditions</a> | 
-    <a href="contactus.html">Contact Us</a> | 
-    &copy; 2024 BetFam
-</div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#home" aria-label="BetFam home">
+        <span class="logo" aria-hidden="true">🍃</span>
+        <span>BetFam</span>
+      </a>
+      <div class="nav-links" aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a class="nav-cta" href="https://play.google.com/store/apps/details?id=com.betfam.apptea" target="_blank" rel="noopener">Get the App</a>
+      </div>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a class="nav-cta" style="margin:12px" href="https://play.google.com/store/apps/details?id=com.betfam.apptea" target="_blank" rel="noopener">Get the App</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero">
+    <div class="container hero-inner">
+      <div>
+        <span class="kicker">Tea Farm Record‑Keeping</span>
+        <h1>Digitize farm records. Grow with data.</h1>
+        <p class="sub">BetFam lets tea farmers track green leaf kilos, manage employee wages, and visualize production trends — securely synced to your Google Drive.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.betfam.apptea" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 12a9 9 0 1118 0 9 9 0 01-18 0zm6.5-2.5l5 3-5 3v-6z" stroke="currentColor" stroke-width="1.6"/></svg>
+            Get on Google Play
+          </a>
+          <a class="btn btn-ghost" href="#features">Explore features</a>
+        </div>
+        <div class="spacer-4"></div>
+        <p class="muted"><span class="badge">New</span> Offline-first • Charts & Insights • Works on any Android device</p>
+      </div>
+      <div class="hero-card reveal" aria-hidden="true">
+        <div class="mock">App Screenshot Placeholder</div>
+        <div class="divider"></div>
+        <ul class="muted" style="margin:0; padding-left:1rem">
+          <li>Daily green leaf entries</li>
+          <li>Auto wage calculations</li>
+          <li>Export & backup to Drive</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- FEATURES -->
+    <section id="features" class="container">
+      <h2 class="section-title">Everything you need to run your tea farm</h2>
+      <p class="section-sub">Keep records tidy, pay accurately, and see production trends without spreadsheets or paper notebooks.</p>
+      <div class="spacer-4"></div>
+      <div class="grid grid-3">
+        <article class="card feature reveal">
+          <div class="icon">📈</div>
+          <div>
+            <h3>Production Tracking</h3>
+            <p class="muted">Record daily green leaf kilos and monitor monthly & yearly totals with clean charts.</p>
+          </div>
+        </article>
+        <article class="card feature reveal">
+          <div class="icon">💰</div>
+          <div>
+            <h3>Wage Management</h3>
+            <p class="muted">Calculate wages based on performance and keep staff payments transparent.</p>
+          </div>
+        </article>
+        <article class="card feature reveal">
+          <div class="icon">👥</div>
+          <div>
+            <h3>Employee Insights</h3>
+            <p class="muted">Track each worker’s contribution to improve productivity and reward fairly.</p>
+          </div>
+        </article>
+        <article class="card feature reveal">
+          <div class="icon">☁️</div>
+          <div>
+            <h3>Secure Cloud Backup</h3>
+            <p class="muted">Your data lives on your Google Drive. Private, portable, and safe.</p>
+          </div>
+        </article>
+        <article class="card feature reveal">
+          <div class="icon">📊</div>
+          <div>
+            <h3>Charts & Reports</h3>
+            <p class="muted">Understand trends at a glance and export summaries when you need them.</p>
+          </div>
+        </article>
+        <article class="card feature reveal">
+          <div class="icon">📱</div>
+          <div>
+            <h3>Offline‑first</h3>
+            <p class="muted">No signal? No problem. Records sync when you’re back online.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="container">
+      <h2 class="section-title">How it works</h2>
+      <p class="section-sub">Start in minutes. Capture, review, and grow with confidence.</p>
+      <div class="spacer-4"></div>
+      <div class="grid grid-3">
+        <div class="card step reveal"><div class="num">1</div><div><h3>Install</h3><p class="muted">Download BetFam from Google Play and sign in with your Google account.</p></div></div>
+        <div class="card step reveal"><div class="num">2</div><div><h3>Record</h3><p class="muted">Add daily green leaf kilos and employee tasks — even when offline.</p></div></div>
+        <div class="card step reveal"><div class="num">3</div><div><h3>Analyze</h3><p class="muted">See charts, totals, and performance insights. Export or share when ready.</p></div></div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS (Simple) -->
+    <section class="container">
+      <h2 class="section-title">What farmers say</h2>
+      <p class="section-sub">Real farmers, real results.</p>
+      <div class="spacer-4"></div>
+      <div class="grid grid-3">
+        <blockquote class="card reveal"><p>“Our wage calculations are now simple and accurate.”</p><p class="muted">— Miriam K., Kericho</p></blockquote>
+        <blockquote class="card reveal"><p>“I can finally see where we’re improving month to month.”</p><p class="muted">— Daniel R., Bomet</p></blockquote>
+        <blockquote class="card reveal"><p>“No more lost books. The Google Drive backup gives me peace of mind.”</p><p class="muted">— Grace T., Nandi</p></blockquote>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="container">
+      <h2 class="section-title">Frequently asked questions</h2>
+      <div class="spacer-2"></div>
+      <div class="grid grid-2">
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">Does it work offline? <span aria-hidden="true">＋</span></button>
+          <div class="faq-a">Yes. You can record data without internet and it will sync when you’re online again.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">Where is my data stored? <span aria-hidden="true">＋</span></button>
+          <div class="faq-a">Your records are stored privately on your Google Drive under your account.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">Can I export my data? <span aria-hidden="true">＋</span></button>
+          <div class="faq-a">You can export summaries and charts for sharing with partners or advisors.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">Is there a cost? <span aria-hidden="true">＋</span></button>
+          <div class="faq-a">Core features are free. Advanced services like fertilizer orders and farm management support are coming soon.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="container">
+      <h2 class="section-title">Get in touch</h2>
+      <p class="section-sub">Questions or feedback? We’d love to hear from you.</p>
+      <div class="spacer-4"></div>
+      <div class="grid grid-2">
+        <form class="card reveal" action="https://formspree.io/f/your-id" method="POST">
+          <label for="name">Name</label>
+          <input id="name" name="name" required placeholder="Your name" style="margin:.35rem 0 1rem; width:100%; padding:.8rem; border-radius:10px; border:1px solid rgba(0,0,0,.15); outline:none" />
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="your@email.com" style="margin:.35rem 0 1rem; width:100%; padding:.8rem; border-radius:10px; border:1px solid rgba(0,0,0,.15); outline:none" />
+
+          <label for="msg">Message</label>
+          <textarea id="msg" name="message" rows="5" required placeholder="How can we help?" style="margin:.35rem 0 1rem; width:100%; padding:.8rem; border-radius:10px; border:1px solid rgba(0,0,0,.15); outline:none"></textarea>
+
+          <button class="btn btn-primary" type="submit">Send Message</button>
+          <p class="muted" style="margin-top:8px">We typically reply within 1–2 business days.</p>
+        </form>
+
+        <div class="card reveal">
+          <h3>Contact details</h3>
+          <p class="muted">Prefer email? <button id="copyEmail" class="btn btn-ghost" type="button">Copy email</button></p>
+          <p class="muted">Privacy • <a href="privacy.html">Privacy Statement</a> • <a href="terms.html">Terms</a></p>
+          <div class="divider"></div>
+          <p class="muted">Follow updates on <a href="#">Twitter/X</a> and <a href="#">Facebook</a>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
+      <p>© <span id="year"></span> BetFam. All rights reserved.</p>
+      <p><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="#contact">Contact</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger?.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', String(!expanded));
+      mobileMenu.style.display = expanded ? 'none' : 'block';
+    });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const wrap = btn.closest('.faq-item');
+        const ans = wrap.querySelector('.faq-a');
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        ans.style.display = open ? 'none' : 'block';
+      });
+    });
+
+    // Copy email helper
+    const EMAIL = 'hello@betfamglobal.com';
+    const copyBtn = document.getElementById('copyEmail');
+    copyBtn?.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(EMAIL);
+        copyBtn.textContent = 'Email copied!';
+        setTimeout(() => copyBtn.textContent = 'Copy email', 1800);
+      }catch(err){
+        alert('Email: ' + EMAIL);
+      }
+    });
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "BetFam",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Android",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    "url": "https://username.github.io/",
+    "downloadUrl": "https://play.google.com/store/apps/details?id=com.betfam.apptea",
+    "description": "Tea farm record-keeping with wage management, charts, and Google Drive backup.",
+    "publisher": {"@type": "Organization", "name": "BetFam"}
+  }
+  </script>
 </body>
 </html>
