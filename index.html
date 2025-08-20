@@ -106,6 +106,15 @@
     /* ----------------------
        Hero
     ---------------------- */
+    /* Ensure mobile menu is hidden on larger screens */
+@media (min-width: 821px) {
+  .mobile-menu {
+    display: none !important;
+  }
+  .hamburger {
+    display: none !important;
+  }
+}
     .hero{
       position:relative; overflow:hidden; isolation:isolate;
       background: radial-gradient(1200px 400px at 15% -10%, rgba(68,194,170,.25), transparent),
@@ -451,6 +460,7 @@
   </script>
 </body>
 </html>
+
 
 
 
